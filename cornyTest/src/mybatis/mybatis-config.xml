@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE configuration   
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    
+     <properties resource="mybatis/config.properties"></properties>
+    
+	<typeAliases>
+		<!--给实体类起一个别名 user -->
+		<typeAlias type="mybatis.entity.User" alias="User" />
+	</typeAliases>
+	
+	<!--数据源配置 这块用 sqlite数据库 -->
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="jdbc" />
+			<dataSource type="POOLED">
+				<!-- 
+				<property name="driver" value="org.sqlite.JDBC" />
+				<property name="url" value="jdbc:sqlite:src/mybatis/user.db" />
+				<property name="username" value="" />
+				<property name="password" value="" /> 
+				-->
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" /> 
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<mappers>
+		<!--userMapper.xml装载进来 同等于把“dao”的实现装载进来 -->
+		<mapper resource="mybatis/dao/userMapper.xml" />
+	</mappers>
+	
+</configuration> 

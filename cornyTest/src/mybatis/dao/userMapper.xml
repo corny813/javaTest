@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.dao.UserMapper">
+
+    <!-- 查询 -->
+	<select id="selectUserById" parameterType="String" resultType="mybatis.entity.User">
+		select * from User where id=#{id}
+	</select>
+	
+	<select id="selectAllUser" resultType="mybatis.entity.User">
+		select * from User
+	</select>
+
+	<!-- <insert id="insertUser" parameterType="mybatis.entity.User"> insert 
+		into User(id,name,age) values(#{id},#{name},#{age}) </insert> <insert id="insertUser" 
+		parameterType="mybatis.entity.User" useGeneratedKeys="true" keyProperty="id"> 
+		insert into User(name,age) values(#{name},#{age}) </insert> -->
+		
+	<!-- 插入 -->
+	<insert id="insertUser" parameterType="mybatis.entity.User"
+		keyProperty="id" useGeneratedKeys="false">
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select max(id) from user
+		</selectKey>
+		insert into user(id,name,age) values(#{id}+1,#{name},#{age})
+	</insert>
+
+	<!-- 删除 -->
+	<delete id="deleteUserById" parameterType="int">
+		delete from User where id=#{id}
+	</delete>
+	
+	<delete id="deleteUserByName" parameterType="String">
+		delete from User where name=#{name}
+	</delete>
+
+	<!-- 修改 -->
+	<update id="updateUserNameById" parameterType="mybatis.entity.User">
+		update user set name=#{name} where id=#{id}
+	</update>
+	
+	<update id="updateUserAgeByName" parameterType="mybatis.entity.User">
+		update user set age=#{age} where name=#{name}
+	</update>
+
+</mapper>
